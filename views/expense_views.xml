@@ -1,0 +1,29 @@
+<odoo>
+    <record id="view_form_real_estate_expense" model="ir.ui.view">
+        <field name="name">real.estate.expense.form</field>
+        <field name="model">real.estate.expense</field>
+        <field name="arch" type="xml">
+            <form string="مصروف عقاري">
+                <sheet>
+                    <group>
+                        <field name="property_id"/>
+                        <field name="date"/>
+                        <field name="description"/>
+                        <field name="amount"/>
+                        <field name="expense_type"/>
+                        <field name="paid"/>
+                        <field name="payment_date"/>
+                        <field name="invoice_id"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

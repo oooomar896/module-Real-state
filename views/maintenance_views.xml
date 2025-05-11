@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_form_real_estate_maintenance" model="ir.ui.view">
+        <field name="name">real.estate.maintenance.form</field>
+        <field name="model">real.estate.maintenance</field>
+        <field name="arch" type="xml">
+            <form string="طلب صيانة عقاري">
+                <sheet>
+                    <group>
+                        <field name="property_id"/>
+                        <field name="request_date"/>
+                        <field name="description"/>
+                        <field name="assigned_to"/>
+                        <field name="state"/>
+                        <field name="cost"/>
+                        <field name="completion_date"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

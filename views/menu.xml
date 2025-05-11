@@ -1,0 +1,91 @@
+<odoo>
+    <menuitem id="menu_real_estate_root" name="إدارة العقارات" sequence="10"/>
+    <menuitem id="menu_real_estate_property" name="العقارات" parent="menu_real_estate_root" sequence="10"/>
+
+    <record id="action_real_estate_property" model="ir.actions.act_window">
+        <field name="name">العقارات</field>
+        <field name="res_model">real.estate.property</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_list_real_estate_property"/>
+    </record>
+
+    <menuitem id="menu_real_estate_property_list"
+              name="قائمة العقارات"
+              parent="menu_real_estate_property"
+              action="action_real_estate_property"
+              sequence="1"/>
+               <!-- Existing menus and actions -->
+
+    <menuitem id="menu_real_estate_contract" name="العقود" parent="menu_real_estate_root" sequence="20"/>
+
+    <record id="action_real_estate_contract" model="ir.actions.act_window">
+        <field name="name">العقود</field>
+        <field name="res_model">real.estate.contract</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_real_estate_contract_list"
+              name="قائمة العقود"
+              parent="menu_real_estate_contract"
+              action="action_real_estate_contract"
+              sequence="1"/>
+        <!-- Existing menus and actions -->
+
+    <menuitem id="menu_real_estate_payment" name="الدفعات" parent="menu_real_estate_root" sequence="30"/>
+
+    <record id="action_real_estate_payment" model="ir.actions.act_window">
+        <field name="name">الدفعات</field>
+        <field name="res_model">real.estate.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_real_estate_payment_list"
+              name="قائمة الدفعات"
+              parent="menu_real_estate_payment"
+              action="action_real_estate_payment"
+              sequence="1"/>
+      <!-- Existing menus and actions -->
+
+    <menuitem id="menu_real_estate_expense" name="المصروفات" parent="menu_real_estate_root" sequence="40"/>
+
+    <record id="action_real_estate_expense" model="ir.actions.act_window">
+        <field name="name">المصروفات</field>
+        <field name="res_model">real.estate.expense</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_real_estate_expense_list"
+              name="قائمة المصروفات"
+              parent="menu_real_estate_expense"
+              action="action_real_estate_expense"
+              sequence="1"/>
+     <!-- Existing menus and actions -->
+
+    <menuitem id="menu_real_estate_maintenance" name="الصيانة" parent="menu_real_estate_root" sequence="50"/>
+
+    <record id="action_real_estate_maintenance" model="ir.actions.act_window">
+        <field name="name">طلبات الصيانة</field>
+        <field name="res_model">real.estate.maintenance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_real_estate_maintenance_list"
+              name="قائمة طلبات الصيانة"
+              parent="menu_real_estate_maintenance"
+              action="action_real_estate_maintenance"
+              sequence="1"/>
+     <!-- Existing menus and actions -->
+
+    <record id="action_real_estate_dashboard" model="ir.actions.act_window">
+        <field name="name">لوحة ملخص العقارات</field>
+        <field name="res_model">real.estate.property</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_id" ref="view_real_estate_dashboard"/>
+    </record>
+
+    <menuitem id="menu_real_estate_dashboard"
+              name="لوحة الملخص"
+              parent="menu_real_estate_root"
+              action="action_real_estate_dashboard"
+              sequence="1"/>
+</odoo>

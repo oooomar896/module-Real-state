@@ -1,0 +1,49 @@
+<odoo>
+    <record id="view_form_real_estate_property" model="ir.ui.view">
+        <field name="name">real.estate.property.form</field>
+        <field name="model">real.estate.property</field>
+        <field name="arch" type="xml">
+            <form string="عقار">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="type"/>
+                        <field name="state"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                        <field name="area"/>
+                        <field name="floor"/>
+                        <field name="building"/>
+                        <field name="project"/>
+                        <field name="owner_id"/>
+                    </group>
+                    <group>
+                        <field name="latitude"/>
+                        <field name="longitude"/>
+                    </group>
+                    <notebook>
+                        <page string="ملاحظات">
+                            <field name="description"/>
+                        </page>
+                        <page string="المرفقات">
+                            <field name="image" widget="image" class="oe_avatar"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="العقود">
+                            <field name="contract_ids"/>
+                        </page>
+                        <page string="المصروفات">
+                            <field name="expense_ids"/>
+                        </page>
+                        <page string="طلبات الصيانة">
+                            <field name="maintenance_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

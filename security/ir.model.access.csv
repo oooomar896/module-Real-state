@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_real_estate_owner_user,access_real_estate_owner_user,model_real_estate_owner,base.group_user,1,1,1,1
-access_real_estate_asset_user,access_real_estate_asset_user,model_real_estate_asset,base.group_user,1,1,1,1
-access_real_estate_rental_contract_user,access_real_estate_rental_contract_user,model_real_estate_rental_contract,base.group_user,1,1,1,1
-
+access_real_estate_property_user,real.estate.property user,model_real_estate_property,base.group_user,1,1,1,1
+access_real_estate_contract_user,real.estate.contract user,model_real_estate_contract,base.group_user,1,1,1,1
+access_real_estate_payment_user,real.estate.payment user,model_real_estate_payment,base.group_user,1,1,1,1
+access_real_estate_expense_user,real.estate.expense user,model_real_estate_expense,base.group_user,1,1,1,1
+access_real_estate_maintenance_user,real.estate.maintenance user,model_real_estate_maintenance,base.group_user,1,1,1,1

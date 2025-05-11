@@ -1,0 +1,30 @@
+<odoo>
+    <record id="view_real_estate_dashboard" model="ir.ui.view">
+        <field name="name">real.estate.dashboard</field>
+        <field name="model">real.estate.property</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard" default_group_by="state">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div>
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div>
+                                <field name="type"/>
+                                <span> | </span>
+                                <field name="state"/>
+                            </div>
+                            <div>
+                                <field name="area"/> م²
+                            </div>
+                            <div>
+                                <field name="owner_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

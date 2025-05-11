@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_form_real_estate_contract" model="ir.ui.view">
+        <field name="name">real.estate.contract.form</field>
+        <field name="model">real.estate.contract</field>
+        <field name="arch" type="xml">
+            <form string="عقد عقاري">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="property_id"/>
+                        <field name="tenant_id"/>
+                        <field name="contract_type"/>
+                        <field name="state"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="amount"/>
+                        <field name="payment_term"/>
+                    </group>
+                    <notebook>
+                        <page string="ملاحظات">
+                            <field name="notes"/>
+                        </page>
+                        <page string="المرفقات">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="الدفعات">
+                            <field name="payment_ids"/>
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
