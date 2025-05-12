@@ -24,3 +24,4 @@ class RealEstateMaintenance(models.Model):
         string="مرفقات الصيانة"
     )
     active = fields.Boolean(string="نشط", default=True)
+    request_number = fields.Char(string="رقم الطلب", required=True)

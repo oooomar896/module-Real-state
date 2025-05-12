@@ -24,12 +24,15 @@
                         <field name="latitude"/>
                         <field name="longitude"/>
                     </group>
+                    <group>
+                        <!-- صورة العقار تظهر هنا بشكل واضح -->
+                        <field name="image" widget="image" class="oe_avatar" options="{'size': [256, 256]}"/>
+                    </group>
                     <notebook>
                         <page string="ملاحظات">
                             <field name="description"/>
                         </page>
                         <page string="المرفقات">
-                            <field name="image" widget="image" class="oe_avatar"/>
                             <field name="attachment_ids" widget="many2many_binary"/>
                         </page>
                         <page string="العقود">

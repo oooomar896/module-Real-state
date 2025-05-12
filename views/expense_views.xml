@@ -5,23 +5,33 @@
         <field name="arch" type="xml">
             <form string="مصروف عقاري">
                 <sheet>
-                    <group>
-                        <field name="property_id"/>
-                        <field name="date"/>
-                        <field name="description"/>
-                        <field name="amount"/>
-                        <field name="expense_type"/>
-                        <field name="paid"/>
-                        <field name="payment_date"/>
-                        <field name="invoice_id"/>
-                        <field name="active"/>
-                    </group>
-                    <group>
-                        <field name="notes"/>
-                    </group>
-                    <group>
-                        <field name="attachment_ids" widget="many2many_binary"/>
-                    </group>
+                    <notebook>
+                        <page string="تفاصيل المصروف">
+                            <group>
+                                <field name="property_id" required="1"/>
+                                <field name="date" required="1"/>
+                                <field name="description" required="1"/>
+                                <field name="amount" required="1"/>
+                                <field name="expense_type"/>
+                                <field name="paid"/>
+                                <field name="payment_date"/>
+                                <field name="invoice_id"/>
+                                <field name="active"/>
+                                <field name="expense_number" required="1"/>
+                                <field name="expense_invoice_id"/>
+                            </group>
+                        </page>
+                        <page string="ملاحظات">
+                            <group>
+                                <field name="notes"/>
+                            </group>
+                        </page>
+                        <page string="المرفقات">
+                            <group>
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

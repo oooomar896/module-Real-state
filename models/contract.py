@@ -11,6 +11,8 @@ class RealEstateContract(models.Model):
 
     contract_type = fields.Selection([
         ('rent', 'إيجار'),
+        ('rent', 'سكني'),
+        ('rent', 'تجاري'),
         ('sale', 'بيع')
     ], string="نوع العقد", required=True)
     start_date = fields.Date(string="تاريخ البداية", required=True)
@@ -19,6 +21,7 @@ class RealEstateContract(models.Model):
     payment_term = fields.Selection([
         ('monthly', 'شهري'),
         ('quarterly', 'ربع سنوي'),
+        ('heathyearly', 'نصف سنوي'),
         ('yearly', 'سنوي')
     ], string="دورية السداد", default='monthly')
     state = fields.Selection([

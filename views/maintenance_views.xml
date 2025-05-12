@@ -5,22 +5,31 @@
         <field name="arch" type="xml">
             <form string="طلب صيانة عقاري">
                 <sheet>
-                    <group>
-                        <field name="property_id"/>
-                        <field name="request_date"/>
-                        <field name="description"/>
-                        <field name="assigned_to"/>
-                        <field name="state"/>
-                        <field name="cost"/>
-                        <field name="completion_date"/>
-                        <field name="active"/>
-                    </group>
-                    <group>
-                        <field name="notes"/>
-                    </group>
-                    <group>
-                        <field name="attachment_ids" widget="many2many_binary"/>
-                    </group>
+                    <notebook>
+                        <page string="تفاصيل الطلب">
+                            <group>
+                                <field name="property_id" required="1"/>
+                                <field name="request_date" required="1"/>
+                                <field name="request_number" required="1"/>
+                                <field name="description" required="1"/>
+                                <field name="assigned_to"/>
+                                <field name="state"/>
+                                <field name="cost"/>
+                                <field name="completion_date"/>
+                                <field name="active"/>
+                            </group>
+                        </page>
+                        <page string="ملاحظات">
+                            <group>
+                                <field name="notes"/>
+                            </group>
+                        </page>
+                        <page string="المرفقات">
+                            <group>
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

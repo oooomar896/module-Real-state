@@ -5,23 +5,34 @@
         <field name="arch" type="xml">
             <form string="دفعة عقارية">
                 <sheet>
-                    <group>
-                        <field name="contract_id"/>
-                        <field name="due_date"/>
-                        <field name="amount"/>
-                        <field name="paid"/>
-                        <field name="payment_date"/>
-                        <field name="payment_method"/>
-                        <field name="invoice_id"/>
-                        <field name="active"/>
-                    </group>
-                    <group>
-                        <field name="notes"/>
-                    </group>
-                    <group>
-                        <field name="attachment_ids" widget="many2many_binary"/>
-                    </group>
+                    <notebook>
+                        <page string="تفاصيل الدفعة">
+                            <group>
+                                <field name="contract_id" required="1"/>
+                                <field name="due_date" required="1"/>
+                                <field name="amount" required="1"/>
+                                <field name="paid"/>
+                                <field name="payment_date"/>
+                                <field name="payment_method"/>
+                                <field name="invoice_id"/>
+                                <field name="active"/>
+                                <field name="payment_number" required="1"/>
+                                <field name="electronic_invoice_id"/>
+                            </group>
+                        </page>
+                        <page string="ملاحظات">
+                            <group>
+                                <field name="notes"/>
+                            </group>
+                        </page>
+                        <page string="المرفقات">
+                            <group>
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
+
             </form>
         </field>
     </record>

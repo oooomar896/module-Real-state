@@ -27,3 +27,5 @@ class RealEstateExpense(models.Model):
     )
     notes = fields.Text(string="ملاحظات")
     active = fields.Boolean(string="نشط", default=True)
+    expense_number = fields.Char(string="رقم المصروف", required=True)
+    expense_invoice_id = fields.Many2one('account.move', string="فاتورة المصروف")
