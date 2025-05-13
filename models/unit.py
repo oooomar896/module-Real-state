@@ -8,6 +8,8 @@ class RealEstateUnit(models.Model):
     name = fields.Char(string="رقم/اسم الوحدة", required=True)
     unit_type = fields.Selection([
         ('apartment', 'شقة'),
+        ('showroom', 'معرض'),
+        ('shop', 'محل'),
         ('office', 'مكتب')
     ], string="نوع الوحدة", required=True)
     floor = fields.Char(string="الدور")
@@ -15,4 +17,3 @@ class RealEstateUnit(models.Model):
 
     # الحقل المطلوب لربط العقود بالوحدة
     contract_ids = fields.One2many('real.estate.contract', 'unit_id', string="العقود")
-    
