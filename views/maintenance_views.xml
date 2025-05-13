@@ -1,37 +1,128 @@
 <odoo>
-    <record id="view_form_real_estate_maintenance" model="ir.ui.view">
-        <field name="name">real.estate.maintenance.form</field>
-        <field name="model">real.estate.maintenance</field>
+    <record id="view_real_estate_dashboard" model="ir.ui.view">
+        <field name="name">real.estate.dashboard</field>
+        <field name="model">real.estate.property</field>
         <field name="arch" type="xml">
-            <form string="طلب صيانة عقاري">
-                <sheet>
-                    <notebook>
-                        <page string="تفاصيل الطلب">
-                            <group>
-                                <field name="property_id" required="1"/>
-                                <field name="request_date" required="1"/>
-                                <field name="request_number" required="1"/>
-                                <field name="description" required="1"/>
-                                <field name="assigned_to"/>
-                                <field name="state"/>
-                                <field name="cost"/>
-                                <field name="completion_date"/>
-                                <field name="active"/>
-                            </group>
-                        </page>
-                        <page string="ملاحظات">
-                            <group>
-                                <field name="notes"/>
-                            </group>
-                        </page>
-                        <page string="المرفقات">
-                            <group>
-                                <field name="attachment_ids" widget="many2many_binary"/>
-                            </group>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
+            <kanban class="o_kanban_dashboard" default_group_by="state">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="state"/>
+                <field name="area"/>
+                <field name="owner_id"/>
+                <field name="balance"/>
+                <field name="occupancy_rate"/>
+                <field name="contract_count"/>
+                <field name="tenant_count"/>
+                <field name="owner_count"/>
+                <field name="ended_contract_ids"/>
+                <!-- الصحيح فقط هذا السطر -->
+                <field name="contract_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click" style="border:1px solid #e0e0e0; border-radius:8px; padding:12px; margin-bottom:10px;">
+                            <!-- اسم العقار -->
+                            <div>
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <!-- النوع والحالة -->
+                            <div>
+                                <field name="type"/>
+                                <span> | </span>
+                                <t t-if="record.state">
+                                    <t t-if="record.state.raw_value == 'available'">
+                                        <span style="background:#28a745;color:white;padding:2px 8px;border-radius:3px;">شاغر</span>
+                                    </t>
+                                    <t t-elif="record.state.raw_value == 'rented'">
+                                        <span style="background:#007bff;color:white;padding:2px 8px;border-radius:3px;">مؤجر</span>
+                                    </t>
+                                    <t t-elif="record.state.raw_value == 'expired'">
+                                        <span style="background:#6c757d;color:white;padding:2px 8px;border-radius:3px;">منتهي العقد</span>
+                                    </t>
+                                    <t t-elif="record.state.raw_value == 'maintenance'">
+                                        <span style="background:#ffc107;color:black;padding:2px 8px;border-radius:3px;">تحت الصيانة</span>
+                                    </t>
+                                    <t t-elif="record.state.raw_value == 'sold'">
+                                        <span style="background:#dc3545;color:white;padding:2px 8px;border-radius:3px;">مباع</span>
+                                    </t>
+                                </t>
+                            </div>
+                            <!-- المساحة -->
+                            <div>
+                                <field name="area"/> م²
+                            </div>
+                            <!-- المالك -->
+                            <div>
+                                <field name="owner_id"/>
+                            </div>
+                            <!-- الرصيد المالي -->
+                            <div>
+                                <field name="balance"/>
+                            </div>
+                            <!-- نسبة الإشغال -->
+                            <div>
+                                <field name="occupancy_rate"/>
+                            </div>
+                            <!-- العقود المرتبطة -->
+                            <div style="margin-top:8px;">
+                                <strong>العقود المرتبطة:</strong>
+                                <ul style="padding-right:16px;">
+                                    <t t-foreach="record.contract_ids.raw_value" t-as="contract">
+                                        <li style="margin-bottom:2px;">
+                                            <span style="color:#007bff;">
+                                                <t t-esc="contract.name"/>
+                                            </span>
+                                            <t t-if="contract.unit_id">
+                                                <span style="margin-right:8px; color:#888;">
+                                                    <t t-esc="contract.unit_id[1]"/>
+                                                </span>
+                                            </t>
+                                            <t t-if="contract.tenant_id">
+                                                <span style="margin-right:8px;">
+                                                    <i class="fa fa-user"></i>
+                                                    <t t-esc="contract.tenant_id[1]"/>
+                                                </span>
+                                            </t>
+                                            <span style="margin-right:8px;">
+                                                <t t-if="contract.state == 'active'">
+                                                    <span style="background:#28a745;color:white;padding:2px 8px;border-radius:3px;">نشط</span>
+                                                </t>
+                                                <t t-elif="contract.state == 'expired'">
+                                                    <span style="background:#6c757d;color:white;padding:2px 8px;border-radius:3px;">منتهي</span>
+                                                </t>
+                                                <t t-elif="contract.state == 'cancelled'">
+                                                    <span style="background:#dc3545;color:white;padding:2px 8px;border-radius:3px;">ملغي</span>
+                                                </t>
+                                                <t t-elif="contract.state == 'draft'">
+                                                    <span style="background:#ffc107;color:black;padding:2px 8px;border-radius:3px;">مسودة</span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span style="background:#999;color:white;padding:2px 8px;border-radius:3px;"><t t-esc="contract.state"/></span>
+                                                </t>
+                                            </span>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div>
+                            <!-- إحصائيات سريعة -->
+                            <div style="margin-top:8px; background:#f6f6f6; border-radius:6px; padding:6px 0; display:flex; justify-content:space-around; font-size:13px;">
+                                <span title="عدد العقود">
+                                    <i class="fa fa-file-contract" style="color:#007bff;"/> <field name="contract_count"/> عقود
+                                </span>
+                                <span title="عدد المستأجرين">
+                                    <i class="fa fa-users" style="color:#28a745;"/> <field name="tenant_count"/> مستأجرين
+                                </span>
+                                <span title="عدد الملاك">
+                                    <i class="fa fa-user" style="color:#6f42c1;"/> <field name="owner_count"/> ملاك
+                                </span>
+                                <span title="عقود منتهية">
+                                    <i class="fa fa-calendar-times" style="color:#dc3545;"/>
+                                    <t t-esc="record.ended_contract_ids.raw_value.length"/> منتهية
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 </odoo>

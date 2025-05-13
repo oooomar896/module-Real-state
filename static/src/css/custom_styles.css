@@ -1,0 +1,104 @@
+/* تحسين خلفية نموذج الفورم */
+.o_form_view {
+    background: linear-gradient(135deg, #f9f9f9 80%, #e3e3e3 100%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    align-items: center;
+    min-height: 100vh;
+    animation: fadeIn 1.2s;
+}
+
+/* تحسين أزرار الحفظ */
+.o_form_button_save, .o_form_button_save[data-hotkey] {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border-radius: 6px;
+    font-weight: 700;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+}
+
+.o_form_button_save:hover, .o_form_button_save[data-hotkey]:hover {
+    background-color: #388e3c !important;
+    box-shadow: 0 4px 12px rgba(56,142,60,0.14);
+}
+
+/* تحسين الخط العام */
+body, .o_form_view {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif !important;
+    font-size: 15px;
+    color: #222;
+    letter-spacing: 0.01em;
+}
+
+/* تحسين ظهور العناصر */
+.fade-in, .o_form_view {
+    animation: fadeIn 1.2s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* تحسين مظهر الترويسة داخل الفورم */
+.o_form_view header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 12px 24px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 16px;
+}
+
+/* تحسين مظهر الحقول عند التركيز */
+.o_form_view input:focus, .o_form_view textarea:focus, .o_form_view select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76,175,80,0.15);
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+/* تحسين مظهر أزرار الإجراء في أسفل الفورم */
+.o_form_view footer .btn {
+    margin-right: 10px;
+    border-radius: 4px;
+    min-width: 110px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.btn {
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

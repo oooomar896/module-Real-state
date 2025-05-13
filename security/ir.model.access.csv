@@ -9,3 +9,4 @@ access_real_estate_contract_manager,access.real.estate.contract.manager,model_re
 access_real_estate_payment_manager,access.real.estate.payment.manager,model_real_estate_payment,base.group_user,1,1,1,1
 access_real_estate_expense_manager,access.real.estate.expense.manager,model_real_estate_expense,base.group_user,1,1,1,1
 access_real_estate_maintenance_manager,access.real.estate.maintenance.manager,model_real_estate_maintenance,base.group_user,1,1,1,1
+access_real_estate_unit_user,Real Estate Unit: User,model_real_estate_unit,base.group_user,1,1,1,1

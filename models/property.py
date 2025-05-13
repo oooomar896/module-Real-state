@@ -31,6 +31,23 @@ class RealEstateProperty(models.Model):
         ('sold', 'مباع')
     ], string="الحالة", default='available')
     total_units = fields.Integer(string="إجمالي الوحدات")
+    finishing_status = fields.Selection([
+        ('unfinished', 'غير مكتمل'),
+        ('semi_finished', 'نصف تشطيب'),
+        ('fully_finished', 'تشطيب كامل'),
+        ('luxury', 'فاخر'),
+    ], string="حالة التشطيب")
+    usage_type = fields.Selection([
+        ('residential', 'سكني'),
+        ('commercial', 'تجاري'),
+        ('mixed', 'سكني وتجاري'),
+        ('industrial', 'صناعي'),
+        ('other', 'أخرى'),
+    ], string="نوع الاستخدام")
+    service_notes = fields.Text(string="ملاحظات الخدمة")
+    license_number = fields.Char(string="رقم الرخصة")
+    purchase_date = fields.Date(string="تاريخ التأجير ")
+    property_value = fields.Float(string="مبلغ الإجار")
     rented_units = fields.Integer(string="الوحدات المؤجرة")
     commercial_rented_units = fields.Integer(string="الوحدات التجارية المؤجرة")
     residential_rented_units = fields.Integer(string="الوحدات السكنية المؤجرة")
@@ -39,6 +56,26 @@ class RealEstateProperty(models.Model):
     contract_ids = fields.One2many('real.estate.contract', 'property_id', string="العقود")
     expense_ids = fields.One2many('real.estate.expense', 'property_id', string="المصروفات")
     maintenance_ids = fields.One2many('real.estate.maintenance', 'property_id', string="طلبات الصيانة")
+    unit_ids = fields.One2many('real.estate.unit', 'property_id', string="الوحدات")
+
+    # الحقول الجديدة للمستأجرين
+    tenant_ids = fields.Many2many(
+        'res.partner',
+        compute='_compute_tenant_ids',
+        string="جميع المستأجرين",
+        store=False
+    )
+    tenant_names = fields.Char(
+        string="أسماء المستأجرين",
+        compute='_compute_tenant_names',
+        store=False
+    )
+
+    available_unit_count = fields.Integer(
+        string="عدد الوحدات المتوفرة",
+        compute="_compute_available_unit_count",
+        store=False
+    )
     attachment_ids = fields.Many2many(
         'ir.attachment',
         'property_attachment_rel',
@@ -62,6 +99,8 @@ class RealEstateProperty(models.Model):
         store=True
     )
 
+    # --- دوال الحقول المحسوبة ---
+
     def _compute_occupancy_rate(self):
         for record in self:
             total_rented_units = record.commercial_rented_units + record.residential_rented_units
@@ -69,6 +108,16 @@ class RealEstateProperty(models.Model):
                 record.occupancy_rate = (total_rented_units / record.total_units) * 100
             else:
                 record.occupancy_rate = 0.0
+
+    @api.depends('unit_ids', 'unit_ids.contract_ids.state')
+    def _compute_available_unit_count(self):
+        for record in self:
+            count = 0
+            for unit in record.unit_ids:
+                active_contracts = unit.contract_ids.filtered(lambda c: c.state == 'active')
+                if not active_contracts:
+                    count += 1
+            record.available_unit_count = count
 
     @api.depends('contract_ids')
     def _compute_contract_count(self):
@@ -92,6 +141,18 @@ class RealEstateProperty(models.Model):
             ended = record.contract_ids.filtered(lambda c: c.state == 'endrented')
             record.ended_contract_ids = ended
 
+    @api.depends('contract_ids.tenant_id')
+    def _compute_tenant_ids(self):
+        for rec in self:
+            tenants = rec.contract_ids.mapped('tenant_id')
+            rec.tenant_ids = [(6, 0, tenants.ids)]
+
+    @api.depends('contract_ids.tenant_id')
+    def _compute_tenant_names(self):
+        for rec in self:
+            tenants = rec.contract_ids.mapped('tenant_id.name')
+            rec.tenant_names = ', '.join(tenants) if tenants else 'لا يوجد مستأجرين'
+
     @api.depends('contract_ids.end_date')
     def _check_and_update_property_state(self):
         for record in self:
@@ -102,7 +163,6 @@ class RealEstateProperty(models.Model):
             if all_contracts_ended and record.contract_ids:
                 if record.state != 'endrented':
                     record.state = 'endrented'
-                    # إشعار داخلي للمالك عند انتهاء جميع العقود
                     if record.owner_id and record.owner_id.user_ids:
                         record.message_post(
                             body=_("تم انتهاء جميع العقود لهذا العقار: %s" % record.name),

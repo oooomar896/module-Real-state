@@ -1,6 +1,6 @@
 <odoo>
     <!-- لوحة ملخص العقارات (Dashboard) -->
-    <record id="action_real_estate_dashboard" model="ir.actions.act_window">
+   <record id="action_real_estate_dashboard" model="ir.actions.act_window">
         <field name="name">لوحة ملخص العقارات</field>
         <field name="res_model">real.estate.property</field>
         <field name="view_mode">kanban,list,form</field>

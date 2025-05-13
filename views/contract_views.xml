@@ -1,38 +1,119 @@
 <odoo>
-    <record id="view_form_real_estate_contract" model="ir.ui.view">
+    <!-- List View -->
+    <record id="view_real_estate_contract_list" model="ir.ui.view">
+        <field name="name">real.estate.contract.list</field>
+        <field name="model">real.estate.contract</field>
+        <field name="arch" type="xml">
+            <list string="العقود العقارية">
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="unit_id"/> <!-- رقم الشقة أو المكتب -->
+                <field name="tenant_id"/>
+                <field name="contract_type"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="amount"/>
+                <field name="state" widget="badge"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_real_estate_contract_form" model="ir.ui.view">
         <field name="name">real.estate.contract.form</field>
         <field name="model">real.estate.contract</field>
         <field name="arch" type="xml">
             <form string="عقد عقاري">
+                <header>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,active,expired,cancelled"
+                        statusbar_colors="{'draft':'gray','active':'blue','expired':'red','cancelled':'black'}"/>
+                </header>
                 <sheet>
+                    <field name="alert_message" widget="html" readonly="1" nolabel="1"/>
                     <group>
-                        <field name="name"/>
-                        <field name="property_id"/>
-                        <field name="tenant_id"/>
-                        <field name="contract_type"/>
-                        <field name="state"/>
-                        <field name="active"/>
-                    </group>
-                    <group>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="amount"/>
-                        <field name="payment_term"/>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="property_id" required="1"/>
+                            <field name="unit_id"/> <!-- رقم الشقة أو المكتب -->
+                            <field name="tenant_id" required="1"/>
+                            <field name="contract_type" required="1"/>
+                        </group>
+                        <group>
+                            <field name="start_date" required="1"/>
+                            <field name="end_date"/>
+                            <field name="amount" required="1"/>
+                            <field name="payment_term"/>
+                        </group>
                     </group>
                     <notebook>
-                        <page string="ملاحظات">
-                            <field name="notes"/>
+                        <page string="الدفعات">
+                            <field name="payment_ids">
+                                <list editable="bottom">
+                                    <field name="payment_number"/>
+                                    <field name="due_date"/>
+                                    <field name="amount"/>
+                                    <field name="paid"/>
+                                    <field name="payment_date"/>
+                                    <field name="payment_method"/>
+                                    <field name="notes"/>
+                                    <field name="active"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="payment_number" required="1"/>
+                                        <field name="due_date" required="1"/>
+                                        <field name="amount" required="1"/>
+                                        <field name="paid"/>
+                                        <field name="payment_date"/>
+                                        <field name="payment_method"/>
+                                        <field name="notes"/>
+                                        <field name="attachment_ids" widget="many2many_binary"/>
+                                        <field name="active"/>
+                                    </group>
+                                </form>
+                            </field>
                         </page>
-                        <page string="المرفقات">
+                        <page string="مرفقات العقد">
                             <field name="attachment_ids" widget="many2many_binary"/>
                         </page>
-                        <page string="الدفعات">
-                            <field name="payment_ids"/>
-
+                        <page string="ملاحظات">
+                            <field name="notes"/>
                         </page>
                     </notebook>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <!-- Search View -->
+    <record id="view_real_estate_contract_search" model="ir.ui.view">
+        <field name="name">real.estate.contract.search</field>
+        <field name="model">real.estate.contract</field>
+        <field name="arch" type="xml">
+            <search string="بحث العقود">
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="unit_id"/> <!-- رقم الشقة أو المكتب -->
+                <field name="tenant_id"/>
+                <field name="contract_type"/>
+                <field name="state"/>
+                <filter string="نشط" name="active" domain="[('active','=',True)]"/>
+                <filter string="منتهي" name="expired" domain="[('state','=','expired')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_real_estate_contract" model="ir.actions.act_window">
+        <field name="name">العقود العقارية</field>
+        <field name="res_model">real.estate.contract</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_real_estate_contract_search"/>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_real_estate_root" name="العقارات" sequence="10"/>
+    <menuitem id="menu_real_estate_contract" name="العقود العقارية" parent="menu_real_estate_root" action="action_real_estate_contract" sequence="20"/>
 </odoo>

@@ -6,9 +6,8 @@
     'description': 'إدارة بيانات العقارات والملاك والمرفقات.',
     'author': 'اسمك',
     'website': '',
-    'depends': ['base'],
+    'depends': ['base', 'web'],
     'data': [
-        'security/ir.model.access.csv',
         'views/property_views.xml',
         'views/contract_views.xml',
         'views/payment_views.xml',
@@ -16,15 +15,13 @@
         'views/maintenance_views.xml',
         'views/dashboard_views.xml',
         'views/menu.xml',
-        # لا تضع ملفات js أو scss أو xml هنا
+        'security/ir.model.access.csv',
     ],
-    'assets': {
-        'web.assets_backend': [
-            'estate_molhimah/static/src/js/my_script.js',
-            'estate_molhimah/static/src/scss/style.scss',
-            'estate_molhimah/static/src/xml/my_template.xml',
-        ],
-    },
     'installable': True,
     'application': True,
+    'assets': {
+        'web.assets_backend': [
+            'estate_molhimah/static/src/css/custom_styles.css',
+        ],
+    },
 }

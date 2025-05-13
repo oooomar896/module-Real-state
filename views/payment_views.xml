@@ -1,4 +1,5 @@
 <odoo>
+    <!-- Form View -->
     <record id="view_form_real_estate_payment" model="ir.ui.view">
         <field name="name">real.estate.payment.form</field>
         <field name="model">real.estate.payment</field>
@@ -9,15 +10,15 @@
                         <page string="تفاصيل الدفعة">
                             <group>
                                 <field name="contract_id" required="1"/>
+                                <field name="property_id" readonly="1"/>
+                                <field name="unit_id" readonly="1"/> <!-- رقم الشقة أو المكتب -->
+                                <field name="payment_number" required="1"/>
                                 <field name="due_date" required="1"/>
                                 <field name="amount" required="1"/>
                                 <field name="paid"/>
                                 <field name="payment_date"/>
                                 <field name="payment_method"/>
-                                <field name="invoice_id"/>
                                 <field name="active"/>
-                                <field name="payment_number" required="1"/>
-                                <field name="electronic_invoice_id"/>
                             </group>
                         </page>
                         <page string="ملاحظات">
@@ -32,8 +33,38 @@
                         </page>
                     </notebook>
                 </sheet>
-
             </form>
         </field>
     </record>
+
+    <!-- List View -->
+    <record id="view_list_real_estate_payment" model="ir.ui.view">
+        <field name="name">real.estate.payment.list</field>
+        <field name="model">real.estate.payment</field>
+        <field name="arch" type="xml">
+            <list string="دفعات العقار">
+                <field name="payment_number"/>
+                <field name="contract_id"/>
+                <field name="property_id"/>
+                <field name="unit_id"/> <!-- رقم الشقة أو المكتب -->
+                <field name="due_date"/>
+                <field name="amount"/>
+                <field name="paid"/>
+                <field name="payment_date"/>
+                <field name="payment_method"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_real_estate_payment" model="ir.actions.act_window">
+        <field name="name">دفعات العقار</field>
+        <field name="res_model">real.estate.payment</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_list_real_estate_payment"/>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_real_estate_payment_root" name="الدفعات العقارية" sequence="20"/>
+    <menuitem id="menu_real_estate_payment" name="إدارة الدفعات" parent="menu_real_estate_payment_root" action="action_real_estate_payment"/>
 </odoo>
