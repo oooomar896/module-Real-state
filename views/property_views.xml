@@ -1,4 +1,7 @@
 <odoo>
+    <!-- Root Menu (أضف هذا السطر في الأعلى) -->
+    <menuitem id="menu_real_estate_property_root" name="العقارات" sequence="1"/>
+
     <!-- Form View -->
     <record id="view_form_real_estate_property" model="ir.ui.view">
         <field name="name">real.estate.property.form</field>
@@ -7,39 +10,33 @@
             <form string="عقار">
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="code"/>
+                        <field name="name" placeholder="اسم العقار"/>
+                        <field name="code" placeholder="صك العقار"/>
                         <field name="type"/>
-                        <field name="state"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,available,rented,endrented"/>
                         <field name="active"/>
                     </group>
                     <group>
-                        <field name="address"/>
-                        <field name="area"/>
-                        <field name="floor"/>
-                        <field name="building"/>
-                        <field name="project"/>
+                        <field name="address" placeholder="العنوان"/>
+                        <field name="area" placeholder="المساحة (م²)"/>
+                        <field name="building" placeholder="اسم/كود المبنى"/>
+                        <field name="project" placeholder="اسم المشروع"/>
                         <field name="owner_id"/>
                     </group>
                     <group>
-                        <field name="latitude"/>
-                        <field name="longitude"/>
+                        <field name="latitude" placeholder="خط العرض"/>
+                        <field name="longitude" placeholder="خط الطول"/>
                     </group>
                     <group string="بيانات إضافية">
-                        <field name="license_number"/>
-                        <field name="purchase_date"/>
-                        <field name="property_value"/>
+                        <field name="license_number" placeholder="رقم الرخصة"/>
+                        <field name="purchase_date" placeholder="تاريخ الشراء"/>
+                        <field name="property_value" placeholder="قيمة العقار"/>
                         <field name="finishing_status"/>
                         <field name="usage_type"/>
-                        <field name="service_notes"/>
+                        <field name="service_notes" placeholder="ملاحظات الخدمة"/>
                     </group>
                     <group>
                         <field name="image" widget="image" class="oe_avatar" options="{'size': [256, 256]}"/>
-                    </group>
-                    <group string="إحصائيات العقار">
-                        <field name="total_units"/>
-                        <field name="available_unit_count" readonly="1"/>
-                        <field name="occupancy_rate" readonly="1"/>
                     </group>
                     <notebook>
                         <page string="الوحدات (شقق/مكاتب)">
@@ -48,20 +45,23 @@
                                     <field name="name"/>
                                     <field name="unit_type"/>
                                     <field name="floor"/>
+                                    <field name="area"/>
                                     <field name="active"/>
+                                    <field name="contract_ids" widget="many2many_tags"/>
                                 </list>
                                 <form>
                                     <group>
-                                        <field name="name" required="1"/>
+                                        <field name="name" required="1" placeholder="رقم/اسم الوحدة"/>
                                         <field name="unit_type" required="1"/>
-                                        <field name="floor"/>
+                                        <field name="floor" placeholder="الدور"/>
+                                        <field name="area" placeholder="المساحة (م²)"/>
                                         <field name="active"/>
                                     </group>
                                 </form>
                             </field>
                         </page>
                         <page string="ملاحظات">
-                            <field name="description"/>
+                            <field name="description" placeholder="ملاحظات"/>
                         </page>
                         <page string="المرفقات">
                             <field name="attachment_ids" widget="many2many_binary"/>
@@ -74,6 +74,17 @@
                         </page>
                         <page string="طلبات الصيانة">
                             <field name="maintenance_ids"/>
+                        </page>
+                        <page string="الوحدات الغير مؤجرة">
+                            <field name="nottajer_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="unit_type"/>
+                                    <field name="floor"/>
+                                    <field name="area"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
@@ -99,7 +110,7 @@
                 <field name="usage_type"/>
                 <field name="property_value"/>
                 <field name="total_units"/>
-                <field name="available_unit_count"/> <!-- عدد الوحدات المتوفرة -->
+                <field name="available_unit_count"/>
                 <field name="occupancy_rate"/>
                 <field name="active"/>
             </list>
@@ -115,6 +126,20 @@
     </record>
 
     <!-- Menu -->
-    <menuitem id="menu_real_estate_property_root" name="العقارات" sequence="1"/>
     <menuitem id="menu_real_estate_property" name="إدارة العقارات" parent="menu_real_estate_property_root" action="action_real_estate_property"/>
+
+    <!-- List View -->
+    <record id="view_list_real_estate_unit" model="ir.ui.view">
+        <field name="name">real.estate.unit.list</field>
+        <field name="model">real.estate.unit</field>
+        <field name="arch" type="xml">
+            <list string="الوحدات العقارية">
+                <field name="name"/>
+                <field name="unit_type"/>
+                <field name="floor"/>
+                <field name="area"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
 </odoo>

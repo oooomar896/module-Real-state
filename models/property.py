@@ -4,9 +4,9 @@ from datetime import date
 class RealEstateProperty(models.Model):
     _name = 'real.estate.property'
     _description = 'عقار'
-
+    contracts_preview_json = fields.Json(compute='_compute_contracts_preview_json')
     name = fields.Char(string="اسم العقار", required=True)
-    code = fields.Char(string="كود العقار")
+    code = fields.Char(string="صك العقار")
     type = fields.Selection([
         ('apartment', 'شقة'),
         ('villa', 'فيلا'),
@@ -20,6 +20,7 @@ class RealEstateProperty(models.Model):
     city = fields.Char(string="المدينة")
     area = fields.Float(string="المساحة (م2)")
     floor = fields.Char(string="الدور")
+    unit_type = fields.Char(string="نوع الوحدة")
     building = fields.Char(string="اسم/كود المبنى")
     project = fields.Char(string="اسم المشروع")
     owner_id = fields.Many2one('res.partner', string="المالك")
@@ -44,6 +45,7 @@ class RealEstateProperty(models.Model):
         ('industrial', 'صناعي'),
         ('other', 'أخرى'),
     ], string="نوع الاستخدام")
+    parent="real_estate.menu_real_estate_property_root"
     service_notes = fields.Text(string="ملاحظات الخدمة")
     license_number = fields.Char(string="رقم الرخصة")
     purchase_date = fields.Date(string="تاريخ التأجير ")
@@ -57,6 +59,20 @@ class RealEstateProperty(models.Model):
     expense_ids = fields.One2many('real.estate.expense', 'property_id', string="المصروفات")
     maintenance_ids = fields.One2many('real.estate.maintenance', 'property_id', string="طلبات الصيانة")
     unit_ids = fields.One2many('real.estate.unit', 'property_id', string="الوحدات")
+    sequence = fields.Integer(string="الترتيب", default=10)
+    nottajer_ids = fields.One2many(
+    'real.estate.unit',
+    'property_id',
+    string="الوحدات الغير مؤجرة",
+    compute="_compute_notTaher_ids",
+    store=False
+)
+
+    @api.depends('unit_ids.contract_ids.state')
+    def _compute_notTaher_ids(self):
+        for record in self:
+            # حساب الوحدات غير المؤجرة
+            record.nottajer_ids = record.unit_ids.filtered(lambda u: not u.contract_ids)
 
     # الحقول الجديدة للمستأجرين
     tenant_ids = fields.Many2many(
@@ -72,9 +88,9 @@ class RealEstateProperty(models.Model):
     )
 
     available_unit_count = fields.Integer(
-        string="عدد الوحدات المتوفرة",
+        string="عدد الوحدات الغير مؤجرة",
         compute="_compute_available_unit_count",
-        store=False
+        store=True
     )
     attachment_ids = fields.Many2many(
         'ir.attachment',
@@ -109,14 +125,10 @@ class RealEstateProperty(models.Model):
             else:
                 record.occupancy_rate = 0.0
 
-    @api.depends('unit_ids', 'unit_ids.contract_ids.state')
+    @api.depends('unit_ids')
     def _compute_available_unit_count(self):
         for record in self:
-            count = 0
-            for unit in record.unit_ids:
-                active_contracts = unit.contract_ids.filtered(lambda c: c.state == 'active')
-                if not active_contracts:
-                    count += 1
+            count = sum(1 for unit in record.unit_ids if not unit.contract_ids.filtered(lambda c: c.state == 'active'))
             record.available_unit_count = count
 
     @api.depends('contract_ids')
@@ -172,3 +184,5 @@ class RealEstateProperty(models.Model):
     @api.onchange('contract_ids')
     def onchange_contract_ids(self):
         self._check_and_update_property_state()
+
+

@@ -1,3 +1,40 @@
+/* CSS Variables for easy theming */
+:root {
+    --primary-color: #3f7e97ad;       /* لون رئيسي أزرق معتدل */
+    --secondary-color: #6c757d;     /* رمادي معتدل */
+    --success-color: #2ecc71;       /* أخضر زاهي للنجاح */
+    --danger-color: #e74c3c;        /* أحمر قوي للتنبيهات */
+    --warning-color: #f39c12;       /* برتقالي واضح للتحذيرات */
+    --info-color: #3498db;          /* أزرق سماوي للمعلومات */
+    --light-color: #f4f6f9;         /* رمادي فاتح للخلفيات */
+    --dark-color: #2c3e50;          /* رمادي داكن للنصوص */
+    --font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+}
+
+body.dark-mode .o_form_view {
+    background: linear-gradient(135deg, #2b2b3c 80%, #1e1e2f 100%);
+}
+
+body.dark-mode .btn {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+body.dark-mode .btn:hover {
+    background-color: #3f7e97ad;
+}
+
+body.dark-mode .tooltip .tooltiptext {
+    background-color: #fafafa;
+    color: #2c3e50;
+}
+
 /* تحسين خلفية نموذج الفورم */
 .o_form_view {
     background: linear-gradient(135deg, #f9f9f9 80%, #e3e3e3 100%);
@@ -7,26 +44,26 @@
     align-items: center;
     min-height: 100vh;
     animation: fadeIn 1.2s;
+    font-family: var(--font-family) !important;
 }
 
 /* تحسين أزرار الحفظ */
 .o_form_button_save, .o_form_button_save[data-hotkey] {
-    background-color: #4CAF50 !important;
+    background-color: var(--success-color) !important;
     color: #fff !important;
     border-radius: 6px;
     font-weight: 700;
     transition: background 0.3s, box-shadow 0.3s;
-    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+    box-shadow: 0 2px 8px rgba(46, 204, 113, 0.08);
 }
 
 .o_form_button_save:hover, .o_form_button_save[data-hotkey]:hover {
-    background-color: #388e3c !important;
-    box-shadow: 0 4px 12px rgba(56,142,60,0.14);
+    background-color: #27ae60 !important;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.14);
 }
 
 /* تحسين الخط العام */
 body, .o_form_view {
-    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif !important;
     font-size: 15px;
     color: #222;
     letter-spacing: 0.01em;
@@ -52,9 +89,11 @@ body, .o_form_view {
 }
 
 /* تحسين مظهر الحقول عند التركيز */
-.o_form_view input:focus, .o_form_view textarea:focus, .o_form_view select:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 0 2px rgba(76,175,80,0.15);
+.o_form_view input:focus,
+.o_form_view textarea:focus,
+.o_form_view select:focus {
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.15);
     outline: none;
     transition: border 0.2s, box-shadow 0.2s;
 }
@@ -68,32 +107,58 @@ body, .o_form_view {
     font-weight: 600;
 }
 
+/* General styling for buttons */
 .btn {
-    transition: transform 0.2s ease-in-out;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .btn:hover {
-    transform: scale(1.05);
+    background-color: #005fa3;
 }
 
+/* Styling for alerts and notifications */
+.alert-success {
+    background-color: var(--success-color);
+    color: #fff;
+}
+
+.alert-danger {
+    background-color: var(--danger-color);
+    color: #fff;
+}
+
+.alert-warning {
+    background-color: var(--warning-color);
+    color: #212529;
+}
+
+.alert-info {
+    background-color: var(--info-color);
+    color: #fff;
+}
+
+/* Tooltip styling */
 .tooltip {
     position: relative;
     display: inline-block;
 }
 
 .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #555;
+    background-color: #333;
     color: #fff;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
     z-index: 1;
-    bottom: 125%; /* Position the tooltip above the text */
+    bottom: 125%;
     left: 50%;
-    margin-left: -60px;
+    margin-left: -75px;
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -101,4 +166,18 @@ body, .o_form_view {
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+/* Responsive grid layout for the dashboard */
+.o_kanban_dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Add hover effects to kanban cards */
+.oe_kanban_global_click:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    transition: transform 0.2s, box-shadow 0.2s;
 }

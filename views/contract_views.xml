@@ -13,7 +13,7 @@
                 <field name="start_date"/>
                 <field name="end_date"/>
                 <field name="amount"/>
-                <field name="state" widget="badge"/>
+                <field name="state" widget="badge" options="{'color': {'draft': 'orange', 'active': 'green', 'expired': 'red', 'cancelled': 'black'}}"/>
                 <field name="active"/>
             </list>
         </field>
@@ -114,6 +114,6 @@
     </record>
 
     <!-- Menu -->
-    <menuitem id="menu_real_estate_root" name="العقارات" sequence="10"/>
-    <menuitem id="menu_real_estate_contract" name="العقود العقارية" parent="menu_real_estate_root" action="action_real_estate_contract" sequence="20"/>
+    <menuitem id="menu_real_estate_root" name="العقارات" />
+    <menuitem id="menu_real_estate_contract" name="العقود العقارية" parent="menu_real_estate_root" action="action_real_estate_contract" />
 </odoo>

@@ -54,54 +54,6 @@
                             <div>
                                 <field name="owner_id"/>
                             </div>
-                            <!-- الرصيد المالي -->
-                            <div>
-                                <field name="balance"/>
-                            </div>
-                            <!-- نسبة الإشغال -->
-                            <div>
-                                <field name="occupancy_rate"/>
-                            </div>
-                            <!-- العقود المرتبطة -->
-                            <div style="margin-top:8px;">
-                                <strong>العقود المرتبطة:</strong>
-                                <ul style="padding-right:16px;">
-                                    <t t-foreach="record.contract_ids.raw_value" t-as="contract">
-                                        <li style="margin-bottom:2px;">
-                                            <!-- اسم المستأجر -->
-                                            <t t-if="contract.tenant_id">
-                                                <span style="color:#007bff;">
-                                                    <t t-esc="contract.tenant_id[1]"/>
-                                                </span>
-                                            </t>
-                                            <!-- اسم الوحدة -->
-                                            <t t-if="contract.unit_id">
-                                                <span style="margin-right:8px;">
-                                                    <t t-esc="contract.unit_id[1]"/>
-                                                </span>
-                                            </t>
-                                            <!-- حالة العقد -->
-                                            <span style="margin-right:8px;">
-                                                <t t-if="contract.state == 'active'">
-                                                    <span style="background:#28a745;color:white;padding:2px 8px;border-radius:3px;">نشط</span>
-                                                </t>
-                                                <t t-elif="contract.state == 'expired' or contract.state == 'endrented'">
-                                                    <span style="background:#6c757d;color:white;padding:2px 8px;border-radius:3px;">منتهي</span>
-                                                </t>
-                                                <t t-elif="contract.state == 'cancelled'">
-                                                    <span style="background:#dc3545;color:white;padding:2px 8px;border-radius:3px;">ملغي</span>
-                                                </t>
-                                                <t t-elif="contract.state == 'draft'">
-                                                    <span style="background:#ffc107;color:black;padding:2px 8px;border-radius:3px;">مسودة</span>
-                                                </t>
-                                                <t t-else="">
-                                                    <span style="background:#999;color:white;padding:2px 8px;border-radius:3px;"><t t-esc="contract.state"/></span>
-                                                </t>
-                                            </span>
-                                        </li>
-                                    </t>
-                                </ul>
-                            </div>
                             <!-- إحصائيات سريعة -->
                             <div style="margin-top:8px; background:#f6f6f6; border-radius:6px; padding:6px 0; display:flex; justify-content:space-around; font-size:13px;">
                                 <span title="عدد العقود">
@@ -111,7 +63,7 @@
                                     <i class="fa fa-users" style="color:#28a745;"/> <field name="tenant_count"/> مستأجرين
                                 </span>
                                 <span title="عدد الملاك">
-                                    <i class="fa fa-user" style="color:#6f42c1;"/> <field name="owner_count"/> ملاك
+                                    <i class="fa fa-user" style="color:#6f42c1;"/> ملاك
                                 </span>
                                 <span title="عقود منتهية">
                                     <i class="fa fa-calendar-times" style="color:#dc3545;"/>
@@ -124,4 +76,5 @@
             </kanban>
         </field>
     </record>
+    
 </odoo>

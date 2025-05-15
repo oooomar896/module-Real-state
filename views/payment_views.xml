@@ -65,6 +65,6 @@
     </record>
 
     <!-- Menu -->
-    <menuitem id="menu_real_estate_payment_root" name="الدفعات العقارية" sequence="20"/>
+    <menuitem id="menu_real_estate_payment_root" name="الدفعات العقارية" />
     <menuitem id="menu_real_estate_payment" name="إدارة الدفعات" parent="menu_real_estate_payment_root" action="action_real_estate_payment"/>
 </odoo>

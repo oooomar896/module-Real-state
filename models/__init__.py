@@ -4,3 +4,4 @@ from . import payment
 from . import expense
 from . import maintenance
 from . import unit
+from . import notTajer

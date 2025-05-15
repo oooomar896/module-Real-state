@@ -8,8 +8,17 @@ class RealEstateContract(models.Model):
     name = fields.Char(string="رقم العقد", required=True)
     property_id = fields.Many2one('real.estate.property', string="العقار", required=True)
     unit_id = fields.Many2one('real.estate.unit', string="الوحدة (شقة/مكتب)")
+    unit_ids = fields.One2many('real.estate.unit', 'property_id', string="الوحدات")
     tenant_id = fields.Many2one('res.partner', string="المستأجر/المشتري", required=True)
     payment_ids = fields.One2many('real.estate.payment', 'contract_id', string="الدفعات")
+    # في نموذج real.estate.property
+    nottajer_ids = fields.One2many(
+    'real.estate.contract',  # الموديل المرتبط
+    'property_id',           # الحقل المرتبط في الموديل الآخر
+    string="الغير مؤجرة",
+    domain="[('state', '!=', 'active')]"  # الفلتر
+     )
+
     contract_type = fields.Selection([
         ('rent_residential', 'إيجار سكني'),
         ('rent_commercial', 'إيجار تجاري'),
@@ -25,9 +34,9 @@ class RealEstateContract(models.Model):
         ('yearly', 'سنوي')
     ], string="دورية السداد", default='monthly')
     state = fields.Selection([
-        ('draft', 'مسودة'),
-        ('active', 'نشط'),
-        ('expired', 'منتهي'),
+        ('draft', 'قرب على الانتهاء'),
+        ('active', 'عقد ساري'),
+        ('expired', 'منتهي العقد'),
         ('cancelled', 'ملغي')
     ], string="الحالة", default='draft')
     attachment_ids = fields.Many2many(
@@ -47,15 +56,21 @@ class RealEstateContract(models.Model):
             rec.alert_message = ""
             if rec.end_date:
                 if rec.end_date < today:
+                    rec.state = 'expired'
                     rec.alert_message = (
                         f'<div style="color:#fff; background:#d9534f; padding:8px; border-radius:4px; margin-bottom:8px;">'
                         f'⚠️ هذا العقد منتهي منذ {rec.end_date.strftime("%Y-%m-%d")}!</div>'
                     )
                 elif today <= rec.end_date <= today + timedelta(days=30):
+                    rec.state = 'draft'
                     rec.alert_message = (
                         f'<div style="color:#856404; background:#fff3cd; padding:8px; border-radius:4px; margin-bottom:8px;">'
                         f'⏰ هذا العقد سينتهي خلال أقل من شهر (تاريخ الانتهاء: {rec.end_date.strftime("%Y-%m-%d")})!</div>'
                     )
+                else:
+                    rec.state = 'active'
+            else:
+                rec.state = 'draft'
 
     @api.onchange('property_id', 'contract_type')
     def _onchange_property_unit(self):
