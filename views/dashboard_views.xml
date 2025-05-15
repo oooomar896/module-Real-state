@@ -5,9 +5,7 @@
         <field name="arch" type="xml">
             <kanban class="o_kanban_dashboard" default_group_by="state">
                 <field name="name"/>
-                <field name="type"/>
                 <field name="state"/>
-                <field name="area"/>
                 <field name="owner_id"/>
                 <field name="balance"/>
                 <field name="occupancy_rate"/>
@@ -15,18 +13,15 @@
                 <field name="tenant_count"/>
                 <field name="owner_count"/>
                 <field name="ended_contract_ids"/>
-                <!-- فقط الحقل الرئيسي للعقود -->
                 <field name="contract_ids"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click" style="border:1px solid #e0e0e0; border-radius:8px; padding:12px; margin-bottom:10px;">
-                            <!-- اسم العقار -->
                             <div>
                                 <strong><field name="name"/></strong>
                             </div>
                             <!-- النوع والحالة -->
                             <div>
-                                <field name="type"/>
                                 <span> | </span>
                                 <t t-if="record.state">
                                     <t t-if="record.state.raw_value == 'available'">
@@ -46,11 +41,7 @@
                                     </t>
                                 </t>
                             </div>
-                            <!-- المساحة -->
-                            <div>
-                                <field name="area"/> م²
-                            </div>
-                            <!-- المالك -->
+
                             <div>
                                 <field name="owner_id"/>
                             </div>
@@ -76,5 +67,4 @@
             </kanban>
         </field>
     </record>
-    
 </odoo>

@@ -7,15 +7,7 @@ class RealEstateProperty(models.Model):
     contracts_preview_json = fields.Json(compute='_compute_contracts_preview_json')
     name = fields.Char(string="اسم العقار", required=True)
     code = fields.Char(string="صك العقار")
-    type = fields.Selection([
-        ('apartment', 'شقة'),
-        ('villa', 'فيلا'),
-        ('shop', 'محل'),
-        ('land', 'أرض'),
-        ('building', 'عمارة'),
-        ('office', 'مكتب'),
-        ('warehouse', 'مستودع'),
-    ], string="النوع", required=True)
+
     address = fields.Char(string="العنوان")
     city = fields.Char(string="المدينة")
     area = fields.Float(string="المساحة (م2)")
@@ -23,14 +15,13 @@ class RealEstateProperty(models.Model):
     unit_type = fields.Char(string="نوع الوحدة")
     building = fields.Char(string="اسم/كود المبنى")
     project = fields.Char(string="اسم المشروع")
-    owner_id = fields.Many2one('res.partner', string="المالك")
+    owner_id = fields.Many2one('res.partner', string="مالك العقار")
     state = fields.Selection([
-        ('available', 'شاغر'),
-        ('rented', 'مؤجر'),
-        ('endrented', 'منتهي العقد'),
-        ('maintenance', 'تحت الصيانة'),
-        ('sold', 'مباع')
-    ], string="الحالة", default='available')
+    ('available', 'شاغر'),
+    ('rented', 'مؤجر'),
+    ('maintenance', 'تحت الصيانة'),
+        ], string="الحالة", default='available')
+
     total_units = fields.Integer(string="إجمالي الوحدات")
     finishing_status = fields.Selection([
         ('unfinished', 'غير مكتمل'),
@@ -98,7 +89,7 @@ class RealEstateProperty(models.Model):
         'property_id', 'attachment_id',
         string="المرفقات"
     )
-    image = fields.Binary(string="صورة رئيسية")
+    image = fields.Binary(string="صورة العقار")
     latitude = fields.Float(string="خط العرض")
     longitude = fields.Float(string="خط الطول")
     active = fields.Boolean(string="نشط", default=True)
