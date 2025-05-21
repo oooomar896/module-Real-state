@@ -6,19 +6,32 @@
     --danger-color: #e74c3c;        /* أحمر قوي للتنبيهات */
     --warning-color: #f39c12;       /* برتقالي واضح للتحذيرات */
     --info-color: #3498db;          /* أزرق سماوي للمعلومات */
-    --light-color: #f4f6f9;         /* رمادي فاتح للخلفيات */
+    --light-color: #f8f9fa;         /* Light gray for backgrounds (slightly different from original) */
     --dark-color: #2c3e50;          /* رمادي داكن للنصوص */
     --font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
 }
 
+/* Global Enhancements */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--light-color);
+    font-family: var(--font-family);
+    color: #333; /* Default text color */
+    line-height: 1.5;
+}
+
 /* Dark Mode */
 body.dark-mode {
-    background-color: #1e1e2f;
+    background-color: #1c1c2b; /* Slightly adjusted dark background */
     color: #e0e0e0;
 }
 
 body.dark-mode .o_form_view {
-    background: linear-gradient(135deg, #2b2b3c 80%, #1e1e2f 100%);
+    background: linear-gradient(135deg, #282838 80%, #1c1c2b 100%);
+    border: 1px solid #3a3a5a;
 }
 
 body.dark-mode .btn {
@@ -27,23 +40,36 @@ body.dark-mode .btn {
 }
 
 body.dark-mode .btn:hover {
-    background-color: #3f7e97ad;
+    background-color: #4a8aa7; /* Slightly lighter hover for dark mode */
 }
 
 body.dark-mode .tooltip .tooltiptext {
-    background-color: #fafafa;
-    color: #2c3e50;
+    background-color: #f0f0f0;
+    color: var(--dark-color);
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    background-color: #2a2a3c;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+    border-color: var(--info-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
 /* تحسين خلفية نموذج الفورم */
 .o_form_view {
-    background: linear-gradient(135deg, #f9f9f9 80%, #e3e3e3 100%);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    align-items: center;
-    min-height: 100vh;
-    animation: fadeIn 1.2s;
+    background: linear-gradient(135deg, #ffffff 80%, #f1f3f5 100%); /* Softer gradient */
+    padding: 20px; /* Adjusted padding */
+    border-radius: 8px; /* Added border-radius */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07); /* Subtle shadow */
+    animation: fadeIn 0.7s ease-out; /* Slightly faster animation */
     font-family: var(--font-family) !important;
 }
 
@@ -51,95 +77,119 @@ body.dark-mode .tooltip .tooltiptext {
 .o_form_button_save, .o_form_button_save[data-hotkey] {
     background-color: var(--success-color) !important;
     color: #fff !important;
-    border-radius: 6px;
-    font-weight: 700;
-    transition: background 0.3s, box-shadow 0.3s;
-    box-shadow: 0 2px 8px rgba(46, 204, 113, 0.08);
+    border-radius: 5px; /* Slightly softer radius */
+    font-weight: 600; /* Adjusted font-weight */
+    transition: background 0.25s, box-shadow 0.25s;
+    box-shadow: 0 2px 5px rgba(46, 204, 113, 0.15);
+    padding: 9px 18px; /* Adjusted padding */
 }
 
 .o_form_button_save:hover, .o_form_button_save[data-hotkey]:hover {
     background-color: #27ae60 !important;
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.14);
+    box-shadow: 0 3px 8px rgba(39, 174, 96, 0.2);
 }
 
 /* تحسين الخط العام */
-body, .o_form_view {
-    font-size: 15px;
-    color: #222;
-    letter-spacing: 0.01em;
+body, .o_form_view { /* body already styled above, .o_form_view inherits or can override */
+    font-size: 14px; /* Slightly smaller base font size for a cleaner look */
+    letter-spacing: 0.005em; /* Reduced letter-spacing */
 }
 
 /* تحسين ظهور العناصر */
-.fade-in, .o_form_view {
-    animation: fadeIn 1.2s ease-in;
+.fade-in { /* General fade-in class */
+    animation: fadeIn 0.7s ease-out;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from { opacity: 0; transform: translateY(5px); } /* Subtle slide up */
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* تحسين مظهر الترويسة داخل الفورم */
 .o_form_view header {
-    background: #fff;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 12px 24px;
+    background: #fff; /* Kept white background */
+    border-bottom: 1px solid #e9ecef; /* Lighter border */
+    padding: 14px 20px; /* Adjusted padding */
     border-radius: 8px 8px 0 0;
-    margin-bottom: 16px;
+    margin-bottom: 20px; /* Increased margin */
 }
 
-/* تحسين مظهر الحقول عند التركيز */
+/* تحسين مظهر الحقول */
+.o_form_view input,
+.o_form_view textarea,
+.o_form_view select {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
 .o_form_view input:focus,
 .o_form_view textarea:focus,
 .o_form_view select:focus {
-    border-color: var(--success-color);
-    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.15);
+    border-color: var(--primary-color); /* Use primary color for focus */
+    box-shadow: 0 0 0 2px rgba(63, 126, 151, 0.15); /* Primary color shadow */
     outline: none;
-    transition: border 0.2s, box-shadow 0.2s;
 }
 
 /* تحسين مظهر أزرار الإجراء في أسفل الفورم */
 .o_form_view footer .btn {
-    margin-right: 10px;
-    border-radius: 4px;
-    min-width: 110px;
-    font-size: 15px;
-    font-weight: 600;
+    margin-right: 8px;
+    border-radius: 5px;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: 500; /* Slightly lighter weight */
+    padding: 7px 15px; /* Adjusted padding */
 }
 
 /* General styling for buttons */
 .btn {
     background-color: var(--primary-color);
     color: #fff;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.2s;
+    border: none;
+    border-radius: 5px;
+    padding: 9px 18px; /* Consistent padding with save button */
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    cursor: pointer;
 }
 
 .btn:hover {
-    background-color: #005fa3;
+    background-color: #336b82; /* Darker shade for hover */
+    transform: translateY(-1px);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 /* Styling for alerts and notifications */
+.alert {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
 .alert-success {
-    background-color: var(--success-color);
-    color: #fff;
+    background-color: #e6ffed; /* Lighter success background */
+    color: #1d7a3e; /* Darker success text */
+    border-color: #c3e6cb;
 }
 
 .alert-danger {
-    background-color: var(--danger-color);
-    color: #fff;
+    background-color: #ffebee; /* Lighter danger background */
+    color: #b71c1c; /* Darker danger text */
+    border-color: #f5c6cb;
 }
 
 .alert-warning {
-    background-color: var(--warning-color);
-    color: #212529;
+    background-color: #fff8e1; /* Lighter warning background */
+    color: #8d6e08; /* Darker warning text */
+    border-color: #ffeeba;
 }
 
 .alert-info {
-    background-color: var(--info-color);
-    color: #fff;
+    background-color: #e3f2fd; /* Lighter info background */
+    color: #0d47a1; /* Darker info text */
+    border-color: #bee5eb;
 }
 
 /* Tooltip styling */
@@ -149,18 +199,21 @@ body, .o_form_view {
 }
 
 .tooltip .tooltiptext {
-    background-color: #333;
+    background-color: var(--dark-color);
     color: #fff;
     text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
+    border-radius: 4px;
+    padding: 5px 8px;
     position: absolute;
-    z-index: 1;
-    bottom: 125%;
+    z-index: 1000;
+    bottom: 130%;
     left: 50%;
-    margin-left: -75px;
+    transform: translateX(-50%); /* Better centering */
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.25s;
+    font-size: 12px;
+    min-width: 120px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
 
 .tooltip:hover .tooltiptext {
@@ -171,13 +224,63 @@ body, .o_form_view {
 /* Responsive grid layout for the dashboard */
 .o_kanban_dashboard {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); /* Adjusted minmax */
+    gap: 18px; /* Adjusted gap */
 }
 
 /* Add hover effects to kanban cards */
+.oe_kanban_global_click {
+    border-radius: 6px; /* Add border radius to cards */
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
 .oe_kanban_global_click:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12); /* Slightly stronger shadow */
     transform: translateY(-2px);
-    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.p-2 { padding: 0.5rem !important; }
+.p-3 { padding: 1rem !important; }
+
+/* Kanban Card Backgrounds by Unit Status */
+.kanban_unit_available .oe_kanban_details {
+    background-color: #e6ffed; /* Light Green */
+    border-left: 5px solid #4CAF50; /* Green Accent */
+}
+
+.kanban_unit_rented_sold .oe_kanban_details {
+    background-color: #ffebee; /* Light Red */
+    border-left: 5px solid #f44336; /* Red Accent */
+}
+
+.kanban_unit_ending_soon .oe_kanban_details {
+    background-color: #fff8e1; /* Light Yellow */
+    border-left: 5px solid #FFC107; /* Yellow Accent */
+}
+
+.kanban_unit_expired_vacant .oe_kanban_details {
+    background-color: #e3f2fd; /* Light Blue */
+    border-left: 5px solid #2196F3; /* Blue Accent */
+}
+
+.kanban_unit_has_issues .oe_kanban_details {
+    background-color: #f5f5f5; /* Light Grey */
+    border-left: 5px solid #9E9E9E; /* Grey Accent */
+}
+
+/* Ensure text within colored cards is readable */
+.kanban_unit_available .oe_kanban_details,
+.kanban_unit_rented_sold .oe_kanban_details,
+.kanban_unit_ending_soon .oe_kanban_details,
+.kanban_unit_expired_vacant .oe_kanban_details,
+.kanban_unit_has_issues .oe_kanban_details {
+    color: #333; /* Or a suitable dark color for text */
+}
+
+.kanban_unit_available .o_kanban_record_title span,
+.kanban_unit_rented_sold .o_kanban_record_title span,
+.kanban_unit_ending_soon .o_kanban_record_title span,
+.kanban_unit_expired_vacant .o_kanban_record_title span,
+.kanban_unit_has_issues .o_kanban_record_title span {
+    color: #111; /* Darker color for titles if needed */
 }

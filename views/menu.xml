@@ -50,45 +50,56 @@
               name="لوحة الملخص"
               parent="menu_real_estate_root"
               action="action_real_estate_dashboard"
-              />
+              sequence="5"/>
+
+    <!-- الوحدات العقارية -->
+    <menuitem id="menu_real_estate_unit_top"
+              name="الوحدات العقارية"
+              parent="menu_real_estate_root"
+              sequence="10" />
+    <menuitem id="menu_real_estate_unit_list_actual"
+              name="قائمة الوحدات العقارية"
+              parent="menu_real_estate_unit_top"
+              action="estate_molhimah.action_real_estate_unit" 
+              sequence="10"/>
 
     <!-- العقارات -->
-    <menuitem id="menu_real_estate_property" name="العقارات" parent="menu_real_estate_root" />
+    <menuitem id="menu_real_estate_property" name="العقارات" parent="menu_real_estate_root" sequence="15"/>
     <menuitem id="menu_real_estate_property_list"
               name="قائمة العقارات"
               parent="menu_real_estate_property"
               action="action_real_estate_property"
-              />
+              sequence="10"/>
 
     <!-- العقود -->
-    <menuitem id="menu_real_estate_contract" name="العقود" parent="menu_real_estate_root" />
+    <menuitem id="menu_real_estate_contract" name="العقود" parent="menu_real_estate_root" sequence="20"/>
     <menuitem id="menu_real_estate_contract_list"
               name="قائمة العقود"
               parent="menu_real_estate_contract"
               action="action_real_estate_contract"
-              />
+              sequence="10"/>
 
     <!-- الدفعات -->
-    <menuitem id="menu_real_estate_payment" name="الدفعات" parent="menu_real_estate_root" />
+    <menuitem id="menu_real_estate_payment" name="الدفعات" parent="menu_real_estate_root" sequence="30"/>
     <menuitem id="menu_real_estate_payment_list"
               name="قائمة الدفعات"
               parent="menu_real_estate_payment"
               action="action_real_estate_payment"
-             />
+              sequence="10"/>
 
     <!-- المصروفات -->
-    <menuitem id="menu_real_estate_expense" name="المصروفات" parent="menu_real_estate_root" />
+    <menuitem id="menu_real_estate_expense" name="المصروفات" parent="menu_real_estate_root" sequence="35"/>
     <menuitem id="menu_real_estate_expense_list"
               name="قائمة المصروفات"
               parent="menu_real_estate_expense"
               action="action_real_estate_expense"
-              />
+              sequence="10"/>
 
     <!-- الصيانة -->
-    <menuitem id="menu_real_estate_maintenance" name="الصيانة" parent="menu_real_estate_root" />
+    <menuitem id="menu_real_estate_maintenance" name="الصيانة" parent="menu_real_estate_root" sequence="40"/>
     <menuitem id="menu_real_estate_maintenance_list"
               name="قائمة طلبات الصيانة"
               parent="menu_real_estate_maintenance"
               action="action_real_estate_maintenance"
-              />
+              sequence="10"/>
 </odoo>

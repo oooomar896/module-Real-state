@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- RealEstateUnit Kanban View -->
+        <record id="view_real_estate_unit_kanban" model="ir.ui.view">
+            <field name="name">real.estate.unit.kanban</field>
+            <field name="model">real.estate.unit</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="unit_status" class="o_kanban_dashboard">
+                    <field name="name"/>
+                    <field name="unit_type"/>
+                    <field name="property_id"/>
+                    <field name="floor"/>
+                    <field name="area"/>
+                    <field name="unit_status"/>
+                    <field name="active"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb8">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title"><span><t t-esc="record.name.value"/></span></strong>
+                                        </div>
+                                        <span t-if="record.unit_status.raw_value == 'available'" class="badge badge-success">متاحة</span>
+                                        <span t-if="record.unit_status.raw_value == 'rented_sold'" class="badge badge-danger">مؤجرة/مباعة</span>
+                                        <span t-if="record.unit_status.raw_value == 'ending_soon'" class="badge badge-warning">قيد الانتهاء</span>
+                                        <span t-if="record.unit_status.raw_value == 'expired_vacant'" class="badge badge-info">شاغرة (منتهي)</span>
+                                        <span t-if="record.unit_status.raw_value == 'has_issues'" class="badge badge-secondary">بها مشاكل</span>
+                                    </div>
+                                    <ul>
+                                        <li t-if="record.property_id.value">العقار: <t t-esc="record.property_id.value"/></li>
+                                        <li t-if="record.unit_type.value">النوع: <t t-esc="record.unit_type.value"/></li>
+                                        <li t-if="record.floor.value">الدور: <t t-esc="record.floor.value"/></li>
+                                        <li t-if="record.area.value">المساحة: <t t-esc="record.area.value"/> م²</li>
+                                    </ul>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="active" widget="boolean_toggle"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- RealEstateUnit List View -->
+        <record id="view_real_estate_unit_list" model="ir.ui.view">
+            <field name="name">real.estate.unit.list</field>
+            <field name="model">real.estate.unit</field>
+            <field name="arch" type="xml">
+                <list string="الوحدات العقارية" decoration-success="unit_status == 'available'" decoration-danger="unit_status == 'rented_sold'" decoration-warning="unit_status == 'ending_soon'" decoration-info="unit_status == 'expired_vacant'" decoration-muted="unit_status == 'has_issues' or active == False">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="property_id"/>
+                    <field name="unit_type"/>
+                    <field name="floor"/>
+                    <field name="area"/>
+                    <field name="unit_status"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- RealEstateUnit Form View -->
+        <record id="view_real_estate_unit_form" model="ir.ui.view">
+            <field name="name">real.estate.unit.form</field>
+            <field name="model">real.estate.unit</field>
+            <field name="arch" type="xml">
+                <form string="وحدة عقارية">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="رقم/اسم الوحدة"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="property_id"/>
+                                <field name="unit_type"/>
+                                <field name="floor"/>
+                            </group>
+                            <group>
+                                <field name="area"/>
+                                <field name="unit_status" readonly="1"/>
+                                <field name="active"/>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="العقود المرتبطة">
+                                <field name="contract_ids" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="tenant_id"/>
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                        <field name="state"/>
+                                        <field name="amount"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- RealEstateUnit Search View -->
+        <record id="view_real_estate_unit_search" model="ir.ui.view">
+            <field name="name">real.estate.unit.search</field>
+            <field name="model">real.estate.unit</field>
+            <field name="arch" type="xml">
+                <search string="بحث في الوحدات">
+                    <field name="name" string="اسم/رقم الوحدة"/>
+                    <field name="property_id"/>
+                    <field name="unit_type"/>
+                    <field name="unit_status"/>
+                    <filter name="active" string="نشطة" domain="[('active', '=', True)]"/>
+                    <filter name="inactive" string="غير نشطة" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <filter name="status_available" string="متاحة" domain="[('unit_status', '=', 'available')]"/>
+                    <filter name="status_rented_sold" string="مؤجرة/مباعة" domain="[('unit_status', '=', 'rented_sold')]"/>
+                    <filter name="status_ending_soon" string="قيد الانتهاء" domain="[('unit_status', '=', 'ending_soon')]"/>
+                    <filter name="status_expired_vacant" string="شاغرة (منتهي)" domain="[('unit_status', '=', 'expired_vacant')]"/>
+                    <filter name="status_has_issues" string="بها مشاكل" domain="[('unit_status', '=', 'has_issues')]"/>
+                    <group expand="0" string="تجميع حسب">
+                        <filter name="group_by_property" string="العقار" context="{'group_by': 'property_id'}"/>
+                        <filter name="group_by_type" string="نوع الوحدة" context="{'group_by': 'unit_type'}"/>
+                        <filter name="group_by_status" string="حالة الوحدة" context="{'group_by': 'unit_status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for RealEstateUnit -->
+        <record id="action_real_estate_unit" model="ir.actions.act_window">
+            <field name="name">الوحدات العقارية</field>
+            <field name="res_model">real.estate.unit</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="search_view_id" ref="view_real_estate_unit_search"/>
+            <field name="context">{'search_default_group_by_status': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    لا توجد وحدات عقارية لإدارتها حتى الآن. قم بإنشاء وحدة جديدة.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

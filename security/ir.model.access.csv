@@ -1,12 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_real_estate_property_user,real.estate.property user,model_real_estate_property,base.group_user,1,1,1,1
-access_real_estate_contract_user,real.estate.contract user,model_real_estate_contract,base.group_user,1,1,1,1
-access_real_estate_payment_user,real.estate.payment user,model_real_estate_payment,base.group_user,1,1,1,1
-access_real_estate_expense_user,real.estate.expense user,model_real_estate_expense,base.group_user,1,1,1,1
-access_real_estate_maintenance_user,real.estate.maintenance user,model_real_estate_maintenance,base.group_user,1,1,1,1
-access_real_estate_property_manager,access.real.estate.property.manager,model_real_estate_property,base.group_user,1,1,1,1
-access_real_estate_contract_manager,access.real.estate.contract.manager,model_real_estate_contract,base.group_user,1,1,1,1
-access_real_estate_payment_manager,access.real.estate.payment.manager,model_real_estate_payment,base.group_user,1,1,1,1
-access_real_estate_expense_manager,access.real.estate.expense.manager,model_real_estate_expense,base.group_user,1,1,1,1
-access_real_estate_maintenance_manager,access.real.estate.maintenance.manager,model_real_estate_maintenance,base.group_user,1,1,1,1
-access_real_estate_unit_user,Real Estate Unit: User,model_real_estate_unit,base.group_user,1,1,1,1
+access_real_estate_property_user,real.estate.property.user,model_real_estate_property,base.group_user,1,1,1,1
+access_real_estate_contract_user,real.estate.contract.user,model_real_estate_contract,base.group_user,1,1,1,1
+access_real_estate_payment_user,real.estate.payment.user,model_real_estate_payment,base.group_user,1,1,1,1
+access_real_estate_expense_user,real.estate.expense.user,model_real_estate_expense,base.group_user,1,1,1,1
+access_real_estate_maintenance_user,real.estate.maintenance.user,model_real_estate_maintenance,base.group_user,1,1,1,1
+access_real_estate_property_manager,real.estate.property.manager,model_real_estate_property,base.group_user,1,1,1,1
+access_real_estate_contract_manager,real.estate.contract.manager,model_real_estate_contract,base.group_user,1,1,1,1
+access_real_estate_payment_manager,real.estate.payment.manager,model_real_estate_payment,base.group_user,1,1,1,1
+access_real_estate_expense_manager,real.estate.expense.manager,model_real_estate_expense,base.group_user,1,1,1,1
+access_real_estate_maintenance_manager,real.estate.maintenance.manager,model_real_estate_maintenance,base.group_user,1,1,1,1
+access_real_estate_unit_user,real.estate.unit.user,model_real_estate_unit,base.group_user,1,1,1,1
