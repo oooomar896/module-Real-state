@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1"> <!-- noupdate="1" prevents the sequence from being reset on module update -->
+        <record id="seq_real_estate_contract" model="ir.sequence">
+            <field name="name">Contract Number Sequence</field>
+            <field name="code">real.estate.contract.sequence</field>
+            <field name="prefix">CONTRACT/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/> <!-- Set to True or a specific company if you want company-specific sequences -->
+        </record>
+    </data>
+</odoo>

@@ -7,13 +7,13 @@
             <list string="العقود العقارية">
                 <field name="name"/>
                 <field name="property_id"/>
-                <field name="unit_id"/> <!-- رقم الشقة أو المكتب -->
+                <field name="unit_id"/>
                 <field name="tenant_id"/>
                 <field name="contract_type"/>
                 <field name="start_date"/>
                 <field name="end_date"/>
                 <field name="amount"/>
-                <field name="state" widget="badge" options="{'color': {'draft': 'orange', 'active': 'green', 'expired': 'red', 'cancelled': 'black'}}"/>
+                <field name="state" widget="badge" options="{'color': {'draft': 'gray', 'active': 'green', 'ending_soon': 'orange', 'expired': 'red', 'cancelled': 'black'}}"/>
                 <field name="active"/>
             </list>
         </field>
@@ -27,8 +27,8 @@
             <form string="عقد عقاري">
                 <header>
                     <field name="state" widget="statusbar"
-                        statusbar_visible="draft,active,expired,cancelled"
-                        statusbar_colors="{'draft':'gray','active':'blue','expired':'red','cancelled':'black'}"/>
+                        statusbar_visible="draft,active,ending_soon,expired,cancelled"
+                        statusbar_colors="{'draft':'#A9A9A9', 'active':'#28A745', 'ending_soon':'#FFC107', 'expired':'#DC3545', 'cancelled':'#343A40'}"/>
                 </header>
                 <sheet>
                     <field name="alert_message" widget="html" readonly="1" nolabel="1"/>
@@ -36,7 +36,8 @@
                         <group>
                             <field name="name" required="1"/>
                             <field name="property_id" required="1"/>
-                            <field name="unit_id"/> <!-- رقم الشقة أو المكتب -->
+                            <!-- هنا التعديل -->
+                            <field name="unit_id" domain="[('property_id', '=', property_id)]"/>
                             <field name="tenant_id" required="1"/>
                             <field name="contract_type" required="1"/>
                         </group>
@@ -116,4 +117,6 @@
     <!-- Menu -->
     <menuitem id="menu_real_estate_root" name="العقارات" />
     <menuitem id="menu_real_estate_contract" name="العقود العقارية" parent="menu_real_estate_root" action="action_real_estate_contract" />
+
+
 </odoo>
